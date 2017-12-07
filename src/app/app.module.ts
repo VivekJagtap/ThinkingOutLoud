@@ -12,9 +12,13 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 // Define the routes
 const ROUTES = [
   {
-    path: '',
-    redirectTo: '#',
+    path: '*',
+    redirectTo: '/',
     pathMatch: 'full'
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   },
   {
     path: 'registration',
