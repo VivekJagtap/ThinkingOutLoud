@@ -1,3 +1,54 @@
 <div class="container">
-   <h2>Register here ..</h2>
+   <div class="card">
+    <div class="card-header">
+      Registration
+    </div>
+    <div class="card-body">
+        <form #f="ngForm" (ngSubmit)="save(f.value, f.valid)" novalidate>
+            <!-- we will place our fields here -->
+            <div class="form-group">
+                <label for="username">UserName</label>
+                <!--bind name to ngModel, it's required with minimum 5 characters-->
+                <input type="text" class="form-control" id="username" name="username" [(ngModel)]="user.username" #username="ngModel" required minlength="5">
+                <!--show error only when field is not valid & it's dirty or form submited>-->
+                <div *ngIf="username.invalid && (username.dirty || username.touched)" class="alert alert-danger">
+                    <div *ngIf="username.errors.required">
+                        Name is required.
+                    </div>
+                    <div *ngIf="username.errors.minlength">
+                        Name must be at least 4 characters long.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <!--bind name to ngModel, it's required with minimum 5 characters-->
+                <input type="password" class="form-control" id="password" name="password" [(ngModel)]="user.password" #password="ngModel" required minlength="8">
+                <!--show error only when field is not valid & it's dirty or form submited-->
+                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="alert alert-danger">
+                    <div *ngIf="password.errors.required">
+                        password is required.
+                    </div>
+                    <div *ngIf="password.errors.minlength">
+                        password must be at least 8 characters long.
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" id="email" name="email" [(ngModel)]="user.email" #email="ngModel" required >
+                <!--show error only when field is not valid & it's dirty or form submited-->
+                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                    <div *ngIf="email.errors.required">
+                        email is required.
+                    </div>
+                    <div *ngIf="email.errors.invalid">
+                            email is invalid.
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+  </div>
 </div>
