@@ -40,6 +40,7 @@ userRepository.getAllUser = ()=>{
         if(err) throw err;
 
         console.log(JSON.stringify(users));
+        
     });
 }
 
