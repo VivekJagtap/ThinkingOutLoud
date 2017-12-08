@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../Models/user.interface';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-registration',
@@ -9,7 +10,9 @@ import { User } from '../Models/user.interface';
 export class RegistrationComponent implements OnInit {
   public user:User;
 
-  constructor() { }
+  constructor(private http:HttpClient) { 
+
+  }
 
   ngOnInit() {
     this.user = {
@@ -21,5 +24,8 @@ export class RegistrationComponent implements OnInit {
 
   save(model:User,isValid:boolean){
     console.log(model,isValid);
+    this.http.post('/api/user/save',model,{}).subscribe(data=>{
+      console.log('Data saved -> '+JSON.stringify(data));
+    });
   }
 }

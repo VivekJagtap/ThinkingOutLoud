@@ -28,39 +28,32 @@ router.get(`${requestMapping}`,(req,res)=>{
  * get user by username.
  */
 router.get(`${requestMapping}/:username`,(req,res)=>{
-    return new promise((resolve,reject)=>{
         User.find({}).where('username').equals(req.params.username).exec((err,users)=>{
             if(err) reject(err);
             
-            //console.log(JSON.stringify(users));
-            resolve(users);
+            res.send(JSON.stringify(users));
+            console.log(JSON.stringify(users));
+            
         });
-    })
 });
 
 /**
  * get all users
  */
 router.get(`${requestMapping}/all`,(req,res)=>{
-    return new promise((resolve,reject)=>{
-        User.find({},(err,users)=>{
-            if(err) reject(err);
+            User.find({},(err,users)=>{
+                if(err) res.send(JSON.stringify(err));
 
-            console.log(JSON.stringify(users));
-            resolve(users);
-        });
-    });
+                console.log(JSON.stringify(users));
+                res.send(JSON.stringify(users));
+            });
 });
 
 /**
  * Create a new user.
  */
 router.post(`${requestMapping}/save`,(req,res)=>{
-   promise = userRepository.saveNewUser(req.body);
-   promise.then(()=>{
-        console.log('user created successfully 11');
-        res.send('user created successfully');
-   });
+   userRepository.saveNewUser(req.body);
    console.log('user created successfully 22');
 });
 
@@ -70,7 +63,7 @@ router.post(`${requestMapping}/save`,(req,res)=>{
 router.get(`${requestMapping}/update/:username`,(req,res)=>{
     console.log(req.params.username);
     return new promise((resolve,reject)=>{
-        User.findOneAndUpdate({username:req.params.username},{username:'deathdavis'},function(err,user){
+        User.findOneAndUpdate({username:req.params.username},{username:req.params.username+'_updated'},function(err,user){
             if(err)
                 reject(err);
             
