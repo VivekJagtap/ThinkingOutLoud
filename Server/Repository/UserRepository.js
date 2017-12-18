@@ -83,7 +83,7 @@ userRepository.deleteUserByUsername = (Username)=>{
 
 userRepository.updateUserByUsername = (Username)=>{
     return new promise((resolve,reject)=>{
-        User.findOneAndUpdate({username:deleteUserByUsername},{username:Username+'_updated'},function(err,user){
+        User.findOneAndUpdate({username:Username},{username:Username+'_updated'},function(err,user){
             if(err)
                 reject(err);
             

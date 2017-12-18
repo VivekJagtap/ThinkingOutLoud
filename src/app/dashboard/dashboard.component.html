@@ -1,12 +1,29 @@
-<div class="fluid-container">
+<div class="container" align="center">
   <h1>Dashboard</h1>
-
-  <div class="card w-20" *ngFor="let user of Users">
-    <div class="card-header">
-      <h3>{{user.username}}</h3>
-    </div>
-    <div class="card-body" >
-      {{user.email}}
+  <div class="row">
+    <div class="col-md-12">
+      <h3>User Data</h3>
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th colspan="2" align="center">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let user of Users">
+                <td>{{user.username}}</td>
+                <td>{{user.email}}</td>
+                <td>
+                  <a (click)="updateUser(user)" style="color:darkgreen;">Update</a>
+                </td>
+                <td>
+                    <a (click)="deleteUser(user)" style="color:red;">Delete</a>
+                  </td>
+              </tr>
+            </tbody>
+          </table>
     </div>
   </div>
 </div>

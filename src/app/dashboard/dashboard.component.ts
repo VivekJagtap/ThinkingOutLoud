@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { forEach } from '@angular/router/src/utils/collection';
 
 
 @Component({
@@ -14,15 +15,19 @@ public Users;
   ngOnInit() {
     this.http.get('/api/user/all').subscribe(data=>{
       this.Users = data;
-      console.log("in get_data"+JSON.stringify(data));
+      console.log("Received data : "+data);
     })
   }
 
-  getData(){
-    console.log("in GetData");
-    /*this.http.get('/api/user/all').subscribe(data=>{
-      this.Users = data;
-      console.log("in get_data"+JSON.stringify(data));
-    })*/
+  updateUser(user){
+   this.http.get(`/api/user/update/${user.username}`).subscribe(data=>{
+      console.log("updated "+JSON.stringify(data));
+    })
+  }
+
+  deleteUser(user){
+    this.http.get(`/api/user/delete/${user.username}`).subscribe(data=>{
+      console.log("user deleted ");
+    });
   }
 }
