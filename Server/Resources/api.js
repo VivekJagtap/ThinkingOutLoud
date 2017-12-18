@@ -23,66 +23,78 @@ router.get(`${requestMapping}`,(req,res)=>{
     res.send('User resource is working fine'+JSON.stringify(user));
 });
 
-
 /**
  * get user by username.
  */
-router.get(`${requestMapping}/:username`,(req,res)=>{
-        User.find({}).where('username').equals(req.params.username).exec((err,users)=>{
-            if(err) reject(err);
-            
-            res.send(JSON.stringify(users));
-            console.log(JSON.stringify(users));
-            
-        });
+router.get(`${requestMapping}/findByUsername/:username`,(req,res)=>{
+    userRepository.getUserByUserName(req.params.username).then(data=>{
+        console.log("Record found : "+data);
+        res.send(data);
+    })
+    .catch(err=>{
+        console.log("Failure while finding record for : username -> "+req.params.username);
+        res.send(err);
+    });
 });
+
 
 /**
  * get all users
  */
 router.get(`${requestMapping}/all`,(req,res)=>{
-            User.find({},(err,users)=>{
-                if(err) res.send(JSON.stringify(err));
-
-                console.log(JSON.stringify(users));
-                res.send(JSON.stringify(users));
-            });
+    userRepository.getAllUser().then(data=>{
+        console.log("No. of records received : "+data.length);
+        res.send(data);
+    })
+    .catch(err=>{
+        console.log("failure while getting all users : "+err);
+        res.send(err);
+    });
 });
+
+
 
 /**
  * Create a new user.
  */
 router.post(`${requestMapping}/save`,(req,res)=>{
-   userRepository.saveNewUser(req.body);
-   console.log('user created successfully 22');
+   userRepository.saveNewUser(req.body).then(data=>{
+       console.log("New User saved Successfully : "+data);
+       res.send(data);
+   })
+   .catch(err=>{
+    console.log("Failure while saving new User : "+err);
+       res.send(err);
+   });
 });
 
+
 /**
- * Update user by name :username with deathdavis.
+ * Update user by name :username with username_updated.
  */
 router.get(`${requestMapping}/update/:username`,(req,res)=>{
-    console.log(req.params.username);
-    return new promise((resolve,reject)=>{
-        User.findOneAndUpdate({username:req.params.username},{username:req.params.username+'_updated'},function(err,user){
-            if(err)
-                reject(err);
-            
-            resolve(user);
-        });
+    userRepository.updateUserByUsername(req.params.username).then(data=>{
+        console.log(" User updated Successfully : "+data);
+        res.send(data);
+    })
+    .catch(err=>{
+     console.log("Failure while updating new User : "+err);
+        res.send(err);
     });
 });
+
 
 /**
  * delete user by username :username.
  */
 router.get(`${requestMapping}/delete/:username`,(req,res)=>{
-    return new promise((resolve,reject)=>{
-        User.findOneAndRemove({username:req.params.username},function(err){
-            if(err)
-                reject(err);
-            
-            resolve(`user ${req.params.username} deleted successfully`);
-        });
+    userRepository.deleteUserByUsername(req.params.username).then(data=>{
+        console.log(" User deleted Successfully : "+data);
+        res.send(data);
+    })
+    .catch(err=>{
+     console.log("Failure while deleting new User : "+err);
+        res.send(err);
     });
 });
 

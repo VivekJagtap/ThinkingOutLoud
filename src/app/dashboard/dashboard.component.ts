@@ -14,7 +14,15 @@ public Users;
   ngOnInit() {
     this.http.get('/api/user/all').subscribe(data=>{
       this.Users = data;
+      console.log("in get_data"+JSON.stringify(data));
     })
   }
 
+  getData(){
+    console.log("in GetData");
+    /*this.http.get('/api/user/all').subscribe(data=>{
+      this.Users = data;
+      console.log("in get_data"+JSON.stringify(data));
+    })*/
+  }
 }
