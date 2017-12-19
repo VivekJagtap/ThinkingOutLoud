@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -10,6 +10,9 @@ import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ArticlesComponent } from './articles/articles.component';
+import { IdeasComponent } from './ideas/ideas.component';
+import { AutherComponent } from './auther/auther.component';
 
 // Define the routes
 const ROUTES = [
@@ -25,6 +28,18 @@ const ROUTES = [
   {
     path: 'registration',
     component: RegistrationComponent
+  },
+  {
+    path: 'articles',
+    component: ArticlesComponent
+  },
+  {
+    path: 'ideas',
+    component: IdeasComponent
+  },
+  {
+    path: 'auther',
+    component: AutherComponent
   }
 ];
 
@@ -33,7 +48,10 @@ const ROUTES = [
     AppComponent,
     RegistrationComponent,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    ArticlesComponent,
+    IdeasComponent,
+    AutherComponent
   ],
   imports: [
     BrowserModule,
