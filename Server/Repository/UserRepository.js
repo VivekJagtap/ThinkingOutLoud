@@ -1,8 +1,6 @@
 var userRepository = {};
 var User = require('../Models/User');
 const promise = require('promise');
-var properties = require('../server.properties');
-
 
 userRepository.saveNewUser = (user)=>{
     return new Promise(function(resolve,reject){
