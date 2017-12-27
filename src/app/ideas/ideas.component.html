@@ -1,3 +1,23 @@
-<p>
-  ideas works!
-</p>
+<div class="container">
+  <h1>Ideas</h1>
+  <div class="card" *ngFor="let idea of Ideas">
+    <div class="card-body">
+      <div class="card-title">
+        <div class="row">
+          <div class="col-md-10">
+              <h4 style="color:darkcyan;">{{idea.thought}}</h4>
+          </div>
+          <div class="col-md-2">
+              <h4 style="color:slateblue;">{{idea.category}}</h4>
+          </div>
+        </div>
+      </div>
+      <p>
+        {{idea.context}}
+      </p>
+    </div>
+    <div class="card-footer">
+      {{idea.auther.name}}
+    </div>
+  </div>
+</div>

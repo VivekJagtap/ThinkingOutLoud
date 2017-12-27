@@ -20,10 +20,10 @@ ArticlesRepository.saveNewArticle = (article)=>{
         });
     });
 }
-
+//
 ArticlesRepository.getAllArticles = ()=>{
     return new promise(function(resolve,reject){
-        Articles.find({},(err,articles)=>{
+        Articles.find({}).populate('auther').exec((err,articles)=>{
             if(err)
               reject(err);
             resolve(articles);  

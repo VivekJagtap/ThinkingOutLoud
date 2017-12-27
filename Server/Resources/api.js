@@ -116,16 +116,15 @@ var requestMapping = {
     var autherRepository = require('../Repository/Auther.repository');
 
     var auther = {
-        name:'J.K.Rowlings',
-        age:32,
-        gender:'female',
+        name:'Chetan Bhagat',
+        age:29,
+        gender:'male',
         profession:'Writer',
         User:{
-            "_id" : "5a3766d53efa48133447f084",
-            "username" : "denver",
-            "password" : "e3b8ce80e552594a0d1608de99d2535f",
-            "email" : "denver@rodeo.co",
-            "__v" : 0
+            "_id" : "5a437003246d8817c45a5ad2",
+            "username" : "WhiteWolf",
+            "password" : "695e239b2c52341ace31004314a5f6d6",
+            "email" : "whitewolf@yopmail.com",
         }
     }
 
@@ -186,17 +185,17 @@ var requestMapping = {
     var articlesRepository = require('../Repository/Articles.repository');
     
         var article = {
-            title:'Harry Potter',
-            subtitle:'Goblet of Fire',
-            content:'This is about the 4th part of harry potter series.The Goblet of Fire.',
-            category:'Fantasy',
+            title:'Half Girlfriend',
+            subtitle:'My love story',
+            content:'This is Romantic novel story which tell about authers love life.',
+            category:'Romance',
             auther:{
-                "_id" : "5a3a0397a30d220c180948bd",
-                "name" : "J.K.Rowlings",
-                "age" : 32,
-                "gender" : "female",
+                "_id" : "5a4373d48afd770320b951ba",
+                "name" : "Chetan Bhagat",
+                "age" : 29,
+                "gender" : "male",
                 "profession" : "Writer",
-                "User" : "5a3766d53efa48133447f084",
+                "User" : "5a437003246d8817c45a5ad2",
                 "__v" : 0
             }
         }
@@ -243,16 +242,16 @@ var requestMapping = {
 var ideasRepository = require('../Repository/Ideas.repository');
 
     var idea = {
-        thought:'Fantastic Beast and where to find them.',
-        context:'It is next series of the magical era.',
-        category:'Fantasy',
+        thought:'Clear Your Mind.',
+        context:'free yourself from this cruel world.',
+        category:'philosophy',
         auther:{
-            "_id" : "5a3a0397a30d220c180948bd",
-            "name" : "J.K.Rowlings",
-            "age" : 32,
-            "gender" : "female",
+            "_id" : "5a4373d48afd770320b951ba",
+            "name" : "Chetan Bhagat",
+            "age" : 29,
+            "gender" : "male",
             "profession" : "Writer",
-            "User" : "5a3766d53efa48133447f084",
+            "User" : "5a437003246d8817c45a5ad2",
             "__v" : 0
         }
     }
@@ -264,7 +263,7 @@ var ideasRepository = require('../Repository/Ideas.repository');
 
 
         /**
-         * get all authers
+         * get all ideas
          */
         router.get(`${requestMapping.ideasResource}/all`,(req,res)=>{
             ideasRepository.getAllIdeas().then(data=>{
@@ -280,7 +279,7 @@ var ideasRepository = require('../Repository/Ideas.repository');
 
 
         /**
-         * Create a new auther.
+         * Create a new idea.
          */
         router.get(`${requestMapping.ideasResource}/save`,(req,res)=>{
             ideasRepository.saveNewIdea(idea).then(data=>{

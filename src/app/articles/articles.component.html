@@ -1,3 +1,26 @@
-<p>
-  articles works!
-</p>
+<div class="container">
+  <h1>Articles</h1>
+  <div class="card" *ngFor="let article of Articles">
+    <div class="card-header">
+      <h3>{{article.title}}</h3>
+    </div>
+    <div class="card-body">
+      <div class="card-title">
+        <div class="row">
+          <div class="col-md-10">
+              <h4 style="color:darkcyan;">{{article.subtitle}}</h4>
+          </div>
+          <div class="col-md-2">
+              <h4 style="color:slateblue;">{{article.category}}</h4>
+          </div>
+        </div>
+      </div>
+      <p>
+        {{article.content}}
+      </p>
+    </div>
+    <div class="card-footer">
+      {{article.auther.name}}
+    </div>
+  </div>
+</div>
