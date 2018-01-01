@@ -1,3 +1,28 @@
-<p>
-  auther works!
-</p>
+<div class="container">
+  
+  <div class="card">
+    <div class="card-header">
+      <h3>Authers</h3>
+    </div>
+    <div class="card-body">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Profession</th>
+            <th>age</th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let auther of Authers">
+          <tr (click)="openModal(auther)">
+            <td>{{auther.name}}</td>
+            <td>{{auther.User.email}}</td>
+            <td>{{auther.profession}}</td>
+            <td>{{auther.age}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

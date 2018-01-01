@@ -8,11 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './UiComponents/navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { IdeasComponent } from './ideas/ideas.component';
 import { AutherComponent } from './auther/auther.component';
+import { ModalComponent } from './UiComponents/modal/modal.component';
 
 // Define the routes
 const ROUTES = [
@@ -51,7 +52,8 @@ const ROUTES = [
     DashboardComponent,
     ArticlesComponent,
     IdeasComponent,
-    AutherComponent
+    AutherComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

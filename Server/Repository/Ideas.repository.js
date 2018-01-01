@@ -21,7 +21,7 @@ IdeasRepository.saveNewIdea = (idea)=>{
 
 IdeasRepository.getAllIdeas = ()=>{
     return new promise(function(resolve,reject){
-        Ideas.find({},(err,ideas)=>{
+        Ideas.find({}).populate('auther').exec((err,ideas)=>{
             if(err)
                 reject(err);
             resolve(ideas);    

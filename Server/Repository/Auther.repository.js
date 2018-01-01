@@ -22,7 +22,7 @@ AutherRepository.saveNewAuther = (auther)=>{
 
 AutherRepository.getAllAuthers = ()=>{
     return new promise(function(resolve,reject){
-        Auther.find({},(err,authers)=>{
+        Auther.find({}).populate('User').exec((err,authers)=>{
             if(err)
                 reject(err);
             resolve(authers);    
