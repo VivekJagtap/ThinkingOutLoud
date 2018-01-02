@@ -166,8 +166,8 @@ var requestMapping = {
         /**
          * Create a new auther.
          */
-        router.get(`${requestMapping.autherResource}/save`,(req,res)=>{
-            autherRepository.saveNewAuther(auther).then(data=>{
+        router.post(`${requestMapping.autherResource}/save`,(req,res)=>{
+            autherRepository.saveNewAuther(req.body).then(data=>{
                 console.log("New auther saved Successfully : "+data);
                 res.send(data);
             })
