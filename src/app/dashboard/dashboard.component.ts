@@ -8,7 +8,9 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-public Users;
+  title = 'DASHBOARD!';
+  subTitle='These are our users!!';  
+  public Users;
   constructor(private http:HttpClient) { }
 
   ngOnInit() {

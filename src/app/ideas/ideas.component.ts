@@ -7,6 +7,8 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./ideas.component.css']
 })
 export class IdeasComponent implements OnInit {
+  title = 'Ideas';
+  subTitle='An idea can make you or break you!!';
 public Ideas;
 
   constructor(private http:HttpClient) { }
