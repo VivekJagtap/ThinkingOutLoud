@@ -1,33 +1,107 @@
 <div class="container-fluid">
   <div class="jumbotron jumbotron-fluid">
         <div class="container">
-          <h1 class="display-3">{{title}}</h1>
+          <h1 class="display-3">{{Title}}</h1>
           <p class="lead">
             {{subTitle}}
           </p>
         </div>
   </div>
-  <div class="card" *ngFor="let article of Articles">
-    <div class="card-header">
-      <h3>{{article.title}}</h3>
-    </div>
-    <div class="card-body">
-      <div class="card-title">
-        <div class="row">
-          <div class="col-md-10">
-              <h4 style="color:darkcyan;">{{article.subtitle}}</h4>
-          </div>
-          <div class="col-md-2">
-              <h4 style="color:slateblue;">{{article.category}}</h4>
-          </div>
+  <div class="row">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-header">
+              Create New Article 
+            </div>
+            <div class="card-body">
+                <form #f="ngForm" (ngSubmit)="save(f.value,f.valid)" name="addArticleForm" novalidate>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <input class="form-control" type="text" id="title" name="title" [(ngModel)]="Article.title" #title="ngModel" required maxlength="40">
+                        <div *ngIf="title.invalid && (title.touched || title.dirty)" class="alert alert-danger">
+                          <div *ngIf="title.errors.required">The title is necessary!</div>
+                          <div *ngIf="title.errors.maxlength">The title is too Big!</div>
+                        </div>
+                    </div>
+                  <div class="form-group">
+                      <label for="subtitle">Sub-title</label>
+                      <input class="form-control" type="text" id="subtitle" name="subtitle" [(ngModel)]="Article.subtitle" #subtitle="ngModel" required maxlength="100">
+                      <div *ngIf="subtitle.invalid && (subtitle.touched || subtitle.dirty)" class="alert alert-danger">
+                        <div *ngIf="subtitle.errors.required">Subtitle is necessary!</div>
+                        <div *ngIf="subtitle.errors.maxlength">Sub-title is too long!</div>
+                      </div>
+                    </div>
+               <div class="form-row">
+                  <div class="form-group col-md-6">
+                      <label for="category">Category</label>
+                      <select class="form-control" id="category" name="category" [(ngModel)]="Article.category" #category="ngModel" required>
+                        <option value="Romance">Romance</option>
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Action">Action</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Comedy">Comedy</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Historic">Historic</option>
+                        <option value="Inspirational">Inspirational</option>
+                      </select>
+                      <div *ngIf="category.invalid && (category.touched || category.dirty)" class="alert alert-danger">
+                        <div *ngIf="category.errors.required">We need to know whats's your article's Categoty!</div>
+                      </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                      <label for="auther">Auther</label>
+                      <select class="form-control" id="auther" name="auther" [(ngModel)]="Article.auther" #auther="ngModel" required>
+                        <option *ngFor="let auther of Authers" value="{{auther._id}}">{{auther.name}}</option>
+                      </select>
+                      <div *ngIf="auther.invalid && (auther.touched || auther.dirty)" class="alert alert-danger">
+                        <div *ngIf="auther.errors.required">We need to who wrote this piece of art!</div>
+                      </div>
+                  </div>
+               </div> 
+                 <div class="form-group">
+                   <label for="content">Content</label>
+                   <textarea id="content" class="form-control" name="content" [(ngModel)]="Article.content" #content="ngModel" rows="10" required>Your Article</textarea>
+                   <div *ngIf="content.invalid && (content.touched || content.dirty)" class="alert alert-danger">
+                     <div *ngIf="content.errors.required">Content of the article is required!</div>
+                   </div>
+                 </div> 
+                 <div class="form-row">
+                    <div class="col-md-3 offset-md-9">
+                      <button style="float: right;" type="submit" class="btn btn-primary mb-2">Confirm</button>
+                    </div>
+                  </div>
+              </form>
+            </div>
         </div>
-      </div>
-      <p>
-        {{article.content}}
-      </p>
     </div>
-    <div class="card-footer">
-      {{article.auther.name}}
+    <div class="col-md-5">
+      <div *ngFor="let article of Articles">
+        <div class="card" >
+            <div class="card-header">
+              <h3 style="color:coral;">{{article.title}}</h3>
+            </div>
+            <div class="card-body">
+              <div class="card-title">
+                <div class="row">
+                  <div class="col-md-6">
+                      <h4 style="color:darkcyan;">{{article.subtitle}}</h4>
+                  </div>
+                  <div class="col-md-6">
+                      <h5 style="color:slateblue;float: right;">{{article.category}}</h5>
+                  </div>
+                </div>
+              </div>
+              <p>
+                {{article.content}}
+              </p>
+            </div>
+            <div class="card-footer" >
+              <p style="color:goldenrod;float: right;"><strong>{{article.auther.name}}</strong></p>
+            </div>
+          </div>
+          <br/>
+        </div>  
     </div>
   </div>
+  
 </div>

@@ -7,24 +7,74 @@
           </p>
         </div>
   </div>
-  <div class="card" *ngFor="let idea of Ideas">
-    <div class="card-body">
-      <div class="card-title">
-        <div class="row">
-          <div class="col-md-10">
-              <h4 style="color:darkcyan;">{{idea.thought}}</h4>
-          </div>
-          <div class="col-md-2">
-              <h4 style="color:slateblue;">{{idea.category}}</h4>
+  <div class="row">
+    <div class="col-md-9">
+        <div class="card" *ngFor="let idea of Ideas" style="width:18rem;">
+            <div class="card-body">
+              <div class="card-title">
+                <div class="row">
+                  <div class="col-md-12">
+                      <h4 style="color:darkcyan;">{{idea.thought}}</h4>
+                  </div>
+                </div>
+              </div>
+              <h5 style="color:slateblue;">{{idea.category}}</h5>
+              <p>
+                {{idea.context}}
+              </p>
+            </div>
+            <div class="card-footer">
+              {{idea.auther.name}}
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+      <form #f="ngForm" (ngSubmit)="save(f.value,f.valid)" name="addIdeaForm" novalidate>
+        <div class="form-group">
+          <label for="thought">Thought</label>
+          <input class="form-control" type="text" id="thought" name="thought" [(ngModel)]="Idea.thought" #thought="ngModel" required>
+          <div *ngIf="thought.invalid && (thought.touched || thought.dirty)" class="alert alert-danger">
+            <div *ngIf="thought.errors.required">What's on your Mind!</div>
           </div>
         </div>
-      </div>
-      <p>
-        {{idea.context}}
-      </p>
-    </div>
-    <div class="card-footer">
-      {{idea.auther.name}}
+        <div class="form-group">
+            <label for="category">Category</label>
+            <select class="form-control" id="category" name="category" [(ngModel)]="Idea.category" #category="ngModel" required>
+              <option value="Romance">Romance</option>
+              <option value="Fantasy">Fantasy</option>
+              <option value="Action">Action</option>
+              <option value="Adventure">Adventure</option>
+              <option value="Comedy">Comedy</option>
+              <option value="Horror">Horror</option>
+              <option value="Historic">Historic</option>
+              <option value="Inspirational">Inspirational</option>
+              <option value="Productive">Productive</option>
+            </select>
+            <div *ngIf="category.invalid && (category.touched || category.dirty)" class="alert alert-danger">
+              <div *ngIf="category.errors.required">tell us your Idea's Categoty!</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="context">Context</label>
+            <textarea class="form-control" rows="2" id="context" name="context" [(ngModel)]="Idea.context" #context="ngModel" required></textarea>
+            <div *ngIf="context.invalid && (context.touched || context.dirty)" class="alert alert-danger">
+              <div *ngIf="context.errors.required">idea is nothing without context!</div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="auther">Auther</label>
+            <select class="form-control" id="auther" name="auther" [(ngModel)]="Idea.auther" #auther="ngModel" required>
+              <option *ngFor="let auther of Authers" value="{{auther._id}}">{{auther.name}}</option>
+            </select>
+            <div *ngIf="auther.invalid && (auther.touched || auther.dirty)" class="alert alert-danger">
+              <div *ngIf="auther.errors.required">select the creator!</div>
+            </div>
+        </div>
+        <div class="form-group">
+          <button style="float:right;" type="submit" class="btn btn-primary">Create</button>
+        </div>
+      </form>
     </div>
   </div>
+ 
 </div>

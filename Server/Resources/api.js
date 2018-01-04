@@ -225,8 +225,8 @@ var requestMapping = {
             /**
              * Create a new auther.
              */
-            router.get(`${requestMapping.articleResource}/save`,(req,res)=>{
-                articlesRepository.saveNewArticle(article).then(data=>{
+            router.post(`${requestMapping.articleResource}/save`,(req,res)=>{
+                articlesRepository.saveNewArticle(req.body).then(data=>{
                     console.log("New article added Successfully : "+data);
                     res.send(data);
                 })
@@ -281,8 +281,8 @@ var ideasRepository = require('../Repository/Ideas.repository');
         /**
          * Create a new idea.
          */
-        router.get(`${requestMapping.ideasResource}/save`,(req,res)=>{
-            ideasRepository.saveNewIdea(idea).then(data=>{
+        router.post(`${requestMapping.ideasResource}/save`,(req,res)=>{
+            ideasRepository.saveNewIdea(req.body).then(data=>{
                 console.log("New idea added Successfully : "+data);
                 res.send(data);
             })
