@@ -2,6 +2,8 @@ const express = require('express');
 const path = require('path');
 const http = require('http');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+
 /**
  * Property file having all properties/configuration values required for running the app.
  */
@@ -17,6 +19,17 @@ const app = express();
  */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+
+/**
+ * To create a session we need the Session Object.
+ */
+app.use(session({
+        secret:`${properties.session.secret}`,
+        resave: `${properties.session.resave}`,
+        saveUninitialized: `${properties.session.saveUninitiated}`,
+        cookie:`${properties.session.cookie}`
+    }
+));
 
 const api = require('./Server/Resources/api');
 

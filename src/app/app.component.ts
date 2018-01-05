@@ -14,4 +14,5 @@ export class AppComponent {
     this.title = globalDataService.getTitle();
     this.subTitle = globalDataService.getSubTitle();
   }
+
 }

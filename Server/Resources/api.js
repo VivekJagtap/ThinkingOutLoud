@@ -3,6 +3,7 @@ const router = express.Router();
 const axios =  require('axios');
 const promise = require('promise');
 var User = require('../Models/User');
+var Sessions = [];
 
 router.get('/',(req,res)=>{
     res.send('API of Thinking out loud is working!!');
@@ -30,6 +31,28 @@ var requestMapping = {
     }
         router.get(`${requestMapping}`,(req,res)=>{
             res.send('User resource is working fine'+JSON.stringify(user));
+        });
+
+        /**
+         * Authenticate user
+         */
+        router.post(`${requestMapping.userResource}/authenticate`,(req,res)=>{
+            console.log(req.body);
+            userRepository.authenticateUser(req.body.Username,req.body.Password).then(data=>{
+                var sess = {
+                    id:req.sessionID,
+                    cookie:req.session.cookie,
+                    email:data.email,
+                    username:data.username
+                }
+                Sessions.push(sess);
+                console.log("Login success: "+JSON.stringify(Sessions));
+                res.send(sess);
+            })
+            .catch(err=>{
+                console.log("Login Failed for : username -> "+req.body.Username);
+                res.send("Login Failed for : username -> "+req.body.Username);
+            });
         });
 
         /**

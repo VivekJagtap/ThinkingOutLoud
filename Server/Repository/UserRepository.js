@@ -1,6 +1,7 @@
 var userRepository = {};
 var User = require('../Models/User');
 const promise = require('promise');
+var md5 = require('md5');
 
 userRepository.saveNewUser = (user)=>{
     return new Promise(function(resolve,reject){
@@ -26,6 +27,21 @@ userRepository.saveNewUser = (user)=>{
         });
 }
 
+userRepository.authenticateUser = (Username,PassWord) =>{
+    console.log(Username+"--"+md5(PassWord));
+    return new Promise(function(resolve,reject){
+        var Password = md5(PassWord);
+        User.findOne({username:Username,password:Password},(err,user)=>{
+            if(err)
+                reject(err);
+                   
+            if(user)    
+                resolve(user);
+            else
+                reject('User not found');    
+        });
+    });
+};
 
 userRepository.getAllUser = ()=>{
     return new Promise(function(resolve,reject){
