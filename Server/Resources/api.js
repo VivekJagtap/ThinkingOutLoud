@@ -46,13 +46,31 @@ var requestMapping = {
                     username:data.username
                 }
                 Sessions.push(sess);
-                console.log("Login success: "+JSON.stringify(Sessions));
+                console.log("Login Success: "+JSON.stringify(Sessions));
                 res.send(sess);
             })
             .catch(err=>{
                 console.log("Login Failed for : username -> "+req.body.Username);
                 res.send("Login Failed for : username -> "+req.body.Username);
             });
+        });
+
+        /**
+         * Authenticate user
+         */
+        router.get(`${requestMapping.userResource}/logout/:username`,(req,res)=>{
+            var ss = Sessions;
+            Sessions = [];
+            for(var i=0;i<ss.length;i++){
+                if(req.params.username == ss[i].username){ 
+                    delete ss[i];
+                }
+            }
+            ss.forEach(session => {
+                if(Session)
+                    Sessions.push(session);
+            });
+            res.send({});
         });
 
         /**

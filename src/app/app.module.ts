@@ -6,15 +6,15 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
-
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { NavbarComponent } from './UiComponents/navbar/navbar.component';
+import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ArticlesComponent } from './articles/articles.component';
 import { IdeasComponent } from './ideas/ideas.component';
 import { AutherComponent } from './auther/auther.component';
 import { ModalComponent } from './UiComponents/modal/modal.component';
+import { AuthenticationGuardService } from './Services/authentication-guard.service';
 
 // Define the routes
 const ROUTES = [
@@ -25,23 +25,28 @@ const ROUTES = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate:[AuthenticationGuardService]
   },
   {
     path: 'registration',
-    component: RegistrationComponent
+    component: RegistrationComponent,
+    canActivate:[AuthenticationGuardService]
   },
   {
     path: 'articles',
-    component: ArticlesComponent
+    component: ArticlesComponent,
+    canActivate:[AuthenticationGuardService]
   },
   {
     path: 'ideas',
-    component: IdeasComponent
+    component: IdeasComponent,
+    canActivate:[AuthenticationGuardService]
   },
   {
     path: 'auther',
-    component: AutherComponent
+    component: AutherComponent,
+    canActivate:[AuthenticationGuardService]
   }
 ];
 
@@ -63,7 +68,7 @@ const ROUTES = [
     FormsModule,
     HttpClientModule
   ],
-  providers: [CookieService],
+  providers: [CookieService,AuthenticationGuardService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

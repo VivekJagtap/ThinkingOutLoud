@@ -18,19 +18,8 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/auther">Authers</a>
       </li>
-     <!-- <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li> 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle"  id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-        <div class="dropdown-menu" aria-labelledby="dropdown01">
-          <a class="dropdown-item" routerLink="/ideas">Ideas</a>
-          <a class="dropdown-item" routerLink="/articles">Articles</a>
-          <a class="dropdown-item" routerLink="/auther">Authers</a>
-        </div>
-      </li>-->
     </ul>
-    <form align="right" #f="ngForm" name="loginForm" (ngSubmit)="authenticate(f.value,f.valid);" novalidate class="form-inline my-2 my-lg-0">
+    <form *ngIf="!loggedin" align="right" #f="ngForm" name="loginForm" (ngSubmit)="authenticate(f.value,f.valid);" novalidate class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="text" id="Username" name="Username" [(ngModel)]="user.Username" #Username="ngModel" placeholder="username" aria-label="username">
       <input class="form-control mr-sm-2" type="password" id="Password" name="Password" placeholder="password" [(ngModel)]="user.Password" #Password="ngModel" aria-label="password">
       <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
@@ -38,5 +27,9 @@
         <a class="btn btn-success my-2 my-sm-0" routerLink="/registration">Join Us</a>
       </div>
     </form>
+    <div *ngIf="loggedin" class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <button class="btn btn-outline-info my-2 my-sm-0">{{Username}}</button>
+      <button class="btn btn-info my-2 my-sm-0" (click)="logout();">LOGOUT</button>
+    </div>
   </div>
 </nav>
