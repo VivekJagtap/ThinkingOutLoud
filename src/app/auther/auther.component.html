@@ -91,22 +91,27 @@
                     </div>
                   </div>
                   <div class="row">
-                     <div class="col-md-6">
-                        <div class="form-group">
+                    <div class="col-md-6">
+                        <fieldset class="form-group">
+                            <legend>Gender</legend>
                             <div class="form-check">
-                                <input class="form-control" type="radio" name="gender" id="inlineRadio1" value="male" [(ngModel)]="Auther.gender" #gender="ngModel">
-                                <label class="form-check-label" for="genderMale">Male</label>
-                              </div>
-                              <div class="form-check">
-                                  <input class="form-control" type="radio" name="gender" id="inlineRadio2" value="female" [(ngModel)]="Auther.gender" #gender="ngModel">
-                                  <label class="form-check-label" for="genderFemale">Female</label>
+                              <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" id="optionsRadios1" value="male" [(ngModel)]="Auther.gender" #gender="ngModel" required>
+                                  Male
+                              </label>
                             </div>
-                        </div>
+                            <div class="form-check">
+                            <label class="form-check-label">
+                                <input type="radio" class="form-check-input" name="gender" id="optionsRadios2" value="female" [(ngModel)]="Auther.gender" #gender="ngModel" required>
+                                Female
+                              </label>
+                            </div>
+                          </fieldset>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-md-3 offset-md-9">
-                      <button type="submit" class="btn btn-primary mb-2">Confirm</button>
+                      <button type="submit" [disabled]="!autherForm.valid" class="btn btn-primary mb-2">Confirm</button>
                     </div>
                   </div>
                 </form>

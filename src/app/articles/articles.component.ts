@@ -40,6 +40,7 @@ export class ArticlesComponent implements OnInit {
     console.log(this.Article);
     this.http.post('/api/article/save',model,{}).subscribe(data=>{
       console.log('Article saved -> '+JSON.stringify(data));
+      this.Articles.push(data);
     });
   }
 }

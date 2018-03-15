@@ -5,6 +5,7 @@ import { ModalComponent } from '../UiComponents/modal/modal.component';
 
 import { GlobalDataService } from '../global-data.service';
 import { auther } from '../Models/auther.interface';
+
 @Component({
   selector: 'app-auther',
   templateUrl: './auther.component.html',

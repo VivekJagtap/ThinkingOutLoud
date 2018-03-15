@@ -33,8 +33,10 @@ userRepository.authenticateUser = (Username,PassWord) =>{
         var Password = md5(PassWord);
         User.findOne({username:Username,password:Password},(err,user)=>{
             if(err)
-                reject(err);
-                   
+               {
+                   console.log(err);
+                    reject(err);
+               }   
             if(user)    
                 resolve(user);
             else

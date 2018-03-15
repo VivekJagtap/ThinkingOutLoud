@@ -31,7 +31,7 @@ const ROUTES = [
   {
     path: 'registration',
     component: RegistrationComponent,
-    canActivate:[AuthenticationGuardService]
+    canActivate:[]
   },
   {
     path: 'articles',

@@ -29,18 +29,34 @@ export class NavbarComponent implements OnInit {
     this.Username = Session.username;
   }
 
+  setToken(data){
+    
+    if(data.token){
+      this.loggedin = true;
+      this.Username = data.username;
+      this.authService.setTokenAndAuth(data.token,true);
+    }
+    else
+      console.log('authentication failed!');
+  }
+
   authenticate(formData:Object,isValid:boolean){
     this.http.post('/api/user/authenticate',formData,{}).subscribe(data=>{
-        var Session = data;
-        console.log(JSON.stringify(Session));
-        this.setSessionObject(Session);
+       /* var Session = data;
+        
+        this.setSessionObject(Session);*/
+        console.log(JSON.stringify(data));
+        this.setToken(data);
     });
   }
 
   logout(){
-    this.http.get(`/api/user/logout/${this.Username}`,{}).subscribe(data=>{
-      this.authService.setSessionAndAuth({},false);
+    this.setToken({token:null});
+    this.loggedin = false;
+    /*this.http.get(`/api/user/logout/${this.Username}`,{}).subscribe(data=>{
+      //this.authService.setSessionAndAuth({},false);
+      this.setToken({token:null});
       this.loggedin = false;
-    });
+    });*/
   }
 }

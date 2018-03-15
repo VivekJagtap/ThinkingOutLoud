@@ -11,14 +11,22 @@ private session =  {
   username:''
 }
 
+private token = '';
+
   setSessionAndAuth(Session,Authed){
-    this.session = Session;
+    this.token = Session;
     this.authenticated = Authed;
+  }
+
+  setTokenAndAuth(Token,Authed){
+    this.token = Token;
+    this.authenticated = Authed;
+    localStorage.setItem('jwtApplicationToken', this.token);
   }
 
   canActivate() {
     console.log("AuthenticationGuard!!");
-    if(this.authenticated)
+    if(this.authenticated && this.token)
       return true;
     else
       return false;

@@ -44,6 +44,7 @@ app.use(express.static(path.join(__dirname,'dist')));
 */
 app.use('/api',api);
 
+
 /**
 * All the other requests which are not specified in the api.js will automatically get redirected to index page.
 */

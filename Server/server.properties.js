@@ -18,6 +18,9 @@ const properties = {
             secure:true,
             maxAge:60000
         }
+    },
+    jwt:{
+        secret:'thinkingOutLoud'
     }
 };
 

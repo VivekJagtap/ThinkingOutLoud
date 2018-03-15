@@ -3,7 +3,28 @@ const router = express.Router();
 const axios =  require('axios');
 const promise = require('promise');
 var User = require('../Models/User');
-var Sessions = [];
+//var Sessions = [];
+const authjwt = require('../Service/authetication.service');
+
+/**
+ * Middleware for checking the token validity.
+ */
+router.use((req,res,next)=>{
+    console.log('validate');
+    var token = req.body.token || req.query.token || req.headers['x-access-token'];
+    if(token){
+        var valid = authjwt.validateToken(token);
+        if(valid)
+         next();
+        else{
+            return res.status(403).send({ 
+                success: false, 
+                message: 'No token provided.' 
+            });
+        } 
+    }
+        
+})
 
 router.get('/',(req,res)=>{
     res.send('API of Thinking out loud is working!!');
@@ -18,137 +39,145 @@ var requestMapping = {
 };
 
 
-
 /**
  * User API starts from here.
  */
-    var userRepository = require('../Repository/UserRepository');
+var userRepository = require('../Repository/UserRepository');
 
-    var user = {
-        username:'drakeblade',
-        password:'11111111',
-        email:'drakeblade@yopamil.com'
-    }
-        router.get(`${requestMapping}`,(req,res)=>{
-            res.send('User resource is working fine'+JSON.stringify(user));
-        });
+var user = {
+    username:'drakeblade',
+    password:'11111111',
+    email:'drakeblade@yopamil.com'
+}
+    router.get(`${requestMapping}`,(req,res)=>{
+        res.send('User resource is working fine'+JSON.stringify(user));
+    });
 
-        /**
-         * Authenticate user
-         */
-        router.post(`${requestMapping.userResource}/authenticate`,(req,res)=>{
-            console.log(req.body);
-            userRepository.authenticateUser(req.body.Username,req.body.Password).then(data=>{
-                var sess = {
-                    id:req.sessionID,
-                    cookie:req.session.cookie,
-                    email:data.email,
-                    username:data.username
-                }
-                Sessions.push(sess);
-                console.log("Login Success: "+JSON.stringify(Sessions));
-                res.send(sess);
-            })
-            .catch(err=>{
-                console.log("Login Failed for : username -> "+req.body.Username);
-                res.send("Login Failed for : username -> "+req.body.Username);
-            });
-        });
-
-        /**
-         * Authenticate user
-         */
-        router.get(`${requestMapping.userResource}/logout/:username`,(req,res)=>{
-            var ss = Sessions;
-            Sessions = [];
-            for(var i=0;i<ss.length;i++){
-                if(req.params.username == ss[i].username){ 
-                    delete ss[i];
-                }
+    /**
+     * Authenticate user
+     */
+    router.post(`${requestMapping.userResource}/authenticate`,(req,res)=>{
+        console.log(req.body);
+        userRepository.authenticateUser(req.body.Username,req.body.Password).then(data=>{
+           /* var sess = {
+                id:req.sessionID,
+                cookie:req.session.cookie,
+                email:data.email,
+                username:data.username
             }
-            ss.forEach(session => {
-                if(Session)
-                    Sessions.push(session);
+            Sessions.push(sess);*/
+            console.log("1");
+            var token = authjwt.createToken(data);
+            console.log("Login Success: "+JSON.stringify(token));
+            res.json({
+                success:true,
+                username:data.username,
+                message:'User Authenticated successfully!',
+                token:token
             });
-            res.send({});
-        });
-
-        /**
-         * get user by username.
-         */
-        router.get(`${requestMapping.userResource}/findByUsername/:username`,(req,res)=>{
-            userRepository.getUserByUserName(req.params.username).then(data=>{
-                console.log("Record found : "+data);
-                res.send(data);
-            })
-            .catch(err=>{
-                console.log("Failure while finding record for : username -> "+req.params.username);
-                res.send(err);
-            });
-        });
-
-
-        /**
-         * get all users
-         */
-        router.get(`${requestMapping.userResource}/all`,(req,res)=>{
-            userRepository.getAllUser().then(data=>{
-                console.log("No. of records received : "+data.length);
-                res.send(data);
-            })
-            .catch(err=>{
-                console.log("failure while getting all users : "+err);
-                res.send(err);
+        })
+        .catch(err=>{
+            console.log("Login Failed for : username -> "+err);
+            res.json({
+                success:false,
+                message:'User Authenticated failed!',
+                token:null
             });
         });
+    });
 
+    /**
+     * Authenticate user
+     */
+    router.get(`${requestMapping.userResource}/logout/:username`,(req,res)=>{
+        var ss = Sessions;
+        Sessions = [];
+        for(var i=0;i<ss.length;i++){
+            if(req.params.username == ss[i].username){ 
+                delete ss[i];
+            }
+        }
+        ss.forEach(session => {
+            if(Session)
+                Sessions.push(session);
+        });
+        res.send({});
+    });
 
-
-        /**
-         * Create a new user.
-         */
-        router.post(`${requestMapping.userResource}/save`,(req,res)=>{
-        userRepository.saveNewUser(req.body).then(data=>{
-            console.log("New User saved Successfully : "+data);
+    /**
+     * get user by username.
+     */
+    router.get(`${requestMapping.userResource}/findByUsername/:username`,(req,res)=>{
+        userRepository.getUserByUserName(req.params.username).then(data=>{
+            console.log("Record found : "+data);
             res.send(data);
         })
         .catch(err=>{
-            console.log("Failure while saving new User : "+err);
+            console.log("Failure while finding record for : username -> "+req.params.username);
             res.send(err);
         });
+    });
+
+
+    /**
+     * get all users
+     */
+    router.get(`${requestMapping.userResource}/all`,(req,res)=>{
+        userRepository.getAllUser().then(data=>{
+            console.log("No. of records received : "+data.length);
+            res.send(data);
+        })
+        .catch(err=>{
+            console.log("failure while getting all users : "+err);
+            res.send(err);
         });
+    });
 
 
-        /**
-         * Update user by name :username with username_updated.
-         */
-        router.get(`${requestMapping.userResource}/update/:username`,(req,res)=>{
-            userRepository.updateUserByUsername(req.params.username).then(data=>{
-                console.log(" User updated Successfully : "+data);
-                res.send(data);
-            })
-            .catch(err=>{
-            console.log("Failure while updating new User : "+err);
-                res.send(err);
-            });
+
+    /**
+     * Create a new user.
+     */
+    router.post(`${requestMapping.userResource}/save`,(req,res)=>{
+    userRepository.saveNewUser(req.body).then(data=>{
+        console.log("New User saved Successfully : "+data);
+        res.send(data);
+    })
+    .catch(err=>{
+        console.log("Failure while saving new User : "+err);
+        res.send(err);
+    });
+    });
+
+
+    /**
+     * Update user by name :username with username_updated.
+     */
+    router.get(`${requestMapping.userResource}/update/:username`,(req,res)=>{
+        userRepository.updateUserByUsername(req.params.username).then(data=>{
+            console.log(" User updated Successfully : "+data);
+            res.send(data);
+        })
+        .catch(err=>{
+        console.log("Failure while updating new User : "+err);
+            res.send(err);
         });
+    });
 
 
-        /**
-         * delete user by username :username.
-         */
-        router.get(`${requestMapping.userResource}/delete/:username`,(req,res)=>{
-            userRepository.deleteUserByUsername(req.params.username).then(data=>{
-                console.log(" User deleted Successfully : "+data);
-                res.send(data);
-            })
-            .catch(err=>{
-            console.log("Failure while deleting new User : "+err);
-                res.send(err);
-            });
+    /**
+     * delete user by username :username.
+     */
+    router.get(`${requestMapping.userResource}/delete/:username`,(req,res)=>{
+        userRepository.deleteUserByUsername(req.params.username).then(data=>{
+            console.log(" User deleted Successfully : "+data);
+            res.send(data);
+        })
+        .catch(err=>{
+        console.log("Failure while deleting new User : "+err);
+            res.send(err);
         });
-/* ---         ----*/
-
+    });
 
 
 /**
@@ -264,7 +293,7 @@ var requestMapping = {
     
     
             /**
-             * Create a new auther.
+             * Create a new article.
              */
             router.post(`${requestMapping.articleResource}/save`,(req,res)=>{
                 articlesRepository.saveNewArticle(req.body).then(data=>{
