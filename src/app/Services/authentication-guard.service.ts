@@ -24,6 +24,12 @@ private token = '';
     localStorage.setItem('jwtApplicationToken', this.token);
   }
 
+  deleteToken(){
+    localStorage.removeItem('jwtApplicationToken');
+    this.token = null;
+    this.authenticated = false;
+  }
+
   canActivate() {
     console.log("AuthenticationGuard!!");
     if(this.authenticated && this.token)

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 
 
 @Component({
@@ -14,7 +14,8 @@ export class DashboardComponent implements OnInit {
   constructor(private http:HttpClient) { }
 
   ngOnInit() {
-    this.http.get('/api/user/all').subscribe(data=>{
+    const header = new HttpHeaders({'x-access-token':localStorage.getItem('jwtApplicationToken')});
+    this.http.get('/api/user/all',{headers:header}).subscribe(data=>{
       this.Users = data;
       console.log("Received data : "+data);
     })

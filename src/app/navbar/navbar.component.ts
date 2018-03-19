@@ -30,7 +30,6 @@ export class NavbarComponent implements OnInit {
   }
 
   setToken(data){
-    
     if(data.token){
       this.loggedin = true;
       this.Username = data.username;
@@ -51,8 +50,8 @@ export class NavbarComponent implements OnInit {
   }
 
   logout(){
-    this.setToken({token:null});
     this.loggedin = false;
+    this.authService.deleteToken();
     /*this.http.get(`/api/user/logout/${this.Username}`,{}).subscribe(data=>{
       //this.authService.setSessionAndAuth({},false);
       this.setToken({token:null});

@@ -6,25 +6,6 @@ var User = require('../Models/User');
 //var Sessions = [];
 const authjwt = require('../Service/authetication.service');
 
-/**
- * Middleware for checking the token validity.
- */
-router.use((req,res,next)=>{
-    console.log('validate');
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if(token){
-        var valid = authjwt.validateToken(token);
-        if(valid)
-         next();
-        else{
-            return res.status(403).send({ 
-                success: false, 
-                message: 'No token provided.' 
-            });
-        } 
-    }
-        
-})
 
 router.get('/',(req,res)=>{
     res.send('API of Thinking out loud is working!!');
@@ -87,10 +68,36 @@ var user = {
     });
 
     /**
-     * Authenticate user
+     * Middleware for checking the token validity.
+     */
+    router.use((req,res,next)=>{
+        console.log('validate');
+        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+        console.log(token);
+        if(token){
+            authjwt.validateToken(token).then(data=>{
+                console.log('valid----'+data);
+                if(data)
+                    next();
+                else{
+                    return res.status(403).send({ 
+                        success: false, 
+                        message: 'No token provided.' 
+                    });
+                } 
+            }).catch(err=>{
+                console.log(err);
+            });
+            
+        }
+            
+    })
+
+    /**
+     * logout user
      */
     router.get(`${requestMapping.userResource}/logout/:username`,(req,res)=>{
-        var ss = Sessions;
+        /*var ss = Sessions;
         Sessions = [];
         for(var i=0;i<ss.length;i++){
             if(req.params.username == ss[i].username){ 
@@ -100,7 +107,7 @@ var user = {
         ss.forEach(session => {
             if(Session)
                 Sessions.push(session);
-        });
+        });*/
         res.send({});
     });
 
