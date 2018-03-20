@@ -31,7 +31,7 @@ private token = '';
   }
 
   canActivate() {
-    console.log("AuthenticationGuard!!");
+    //console.log("AuthenticationGuard!!");
     if(this.authenticated && this.token)
       return true;
     else

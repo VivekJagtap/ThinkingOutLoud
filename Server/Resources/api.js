@@ -73,10 +73,8 @@ var user = {
     router.use((req,res,next)=>{
         console.log('validate');
         var token = req.body.token || req.query.token || req.headers['x-access-token'];
-        console.log(token);
         if(token){
             authjwt.validateToken(token).then(data=>{
-                console.log('valid----'+data);
                 if(data)
                     next();
                 else{
@@ -175,7 +173,7 @@ var user = {
     /**
      * delete user by username :username.
      */
-    router.get(`${requestMapping.userResource}/delete/:username`,(req,res)=>{
+    router.delete(`${requestMapping.userResource}/delete/:username`,(req,res)=>{
         userRepository.deleteUserByUsername(req.params.username).then(data=>{
             console.log(" User deleted Successfully : "+data);
             res.send(data);

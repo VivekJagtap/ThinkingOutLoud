@@ -5,6 +5,7 @@ import { ModalComponent } from '../UiComponents/modal/modal.component';
 
 import { GlobalDataService } from '../global-data.service';
 import { auther } from '../Models/auther.interface';
+import { RestResourceServiceService } from '../Services/rest-resource-service.service';
 
 @Component({
   selector: 'app-auther',
@@ -20,7 +21,7 @@ export class AutherComponent implements OnInit {
   public Auther;
   @ViewChild(ModalComponent) modal: ModalComponent;
 
-  constructor(private http:HttpClient,private globalDataService:GlobalDataService) {
+  constructor(private globalDataService:GlobalDataService,private restApi:RestResourceServiceService) {
     this.Auther={
       name:'',
       age:'',
@@ -32,12 +33,16 @@ export class AutherComponent implements OnInit {
   
 
   ngOnInit() {
-    this.http.get('/api/auther/all').subscribe(data=>{
+    this.restApi.getResource('/api/auther/all').then(data=>{
       this.Authers = data;
+    }).catch(err=>{
+      console.log(err);
     });
 
-    this.http.get('/api/user/all').subscribe(data=>{
+    this.restApi.getResource('/api/user/all').then(data=>{
       this.Users = data;
+    }).catch(err=>{
+      console.log(err);
     });
   }
 
@@ -50,9 +55,11 @@ export class AutherComponent implements OnInit {
   }
   
   save(model:auther,isValid:boolean){
-    console.log(this.Auther);
-    this.http.post('/api/auther/save',model,{}).subscribe(data=>{
+    this.restApi.postResource('/api/auther/save',model).then(data=>{
       console.log('Data saved -> '+JSON.stringify(data));
+      this.Authers.push(data);
+    }).catch(err=>{
+      console.log(err);
     });
   }
 }

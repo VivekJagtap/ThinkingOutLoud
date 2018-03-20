@@ -8,7 +8,7 @@ AuthenticationService.createToken = (user)=>{
         email:user.email,
         username:user.username
     }
-    var token = jwt.sign(payload,`${properties.jwt.secret}`,{expiresIn:60});
+    var token = jwt.sign(payload,`${properties.jwt.secret}`,{expiresIn:3600});
     
     return token;
 };

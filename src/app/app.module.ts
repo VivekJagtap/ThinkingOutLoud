@@ -15,6 +15,7 @@ import { IdeasComponent } from './ideas/ideas.component';
 import { AutherComponent } from './auther/auther.component';
 import { ModalComponent } from './UiComponents/modal/modal.component';
 import { AuthenticationGuardService } from './Services/authentication-guard.service';
+import { RestResourceServiceService } from './Services/rest-resource-service.service'
 
 // Define the routes
 const ROUTES = [
@@ -68,7 +69,11 @@ const ROUTES = [
     FormsModule,
     HttpClientModule
   ],
-  providers: [CookieService,AuthenticationGuardService],
+  providers: [
+    CookieService,
+    AuthenticationGuardService,
+    RestResourceServiceService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

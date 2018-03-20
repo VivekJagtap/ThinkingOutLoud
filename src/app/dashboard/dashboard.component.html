@@ -19,14 +19,14 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let user of Users">
+              <tr *ngFor="let user of Users;let i = index">
                 <td>{{user.username}}</td>
                 <td>{{user.email}}</td>
                 <td>
-                  <a (click)="updateUser(user)" style="color:darkgreen;">Update</a>
+                  <a (click)="updateUser(user,i)" style="color:darkgreen;">Update</a>
                 </td>
                 <td>
-                    <a (click)="deleteUser(user)" style="color:red;">Delete</a>
+                    <a (click)="deleteUser(user,i)" style="color:red;">Delete</a>
                   </td>
               </tr>
             </tbody>
