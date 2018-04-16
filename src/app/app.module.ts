@@ -6,6 +6,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CookieService } from 'ngx-cookie-service';
 
+
+/**
+ * User defined Components
+ */
 import { AppComponent } from './app.component';
 import { RegistrationComponent } from './registration/registration.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -14,8 +18,15 @@ import { ArticlesComponent } from './articles/articles.component';
 import { IdeasComponent } from './ideas/ideas.component';
 import { AutherComponent } from './auther/auther.component';
 import { ModalComponent } from './UiComponents/modal/modal.component';
+import { ProfileComponent } from './profile/profile.component';
+
+/**
+ * Services
+ */
 import { AuthenticationGuardService } from './Services/authentication-guard.service';
-import { RestResourceServiceService } from './Services/rest-resource-service.service'
+import { RestResourceServiceService } from './Services/rest-resource-service.service';
+import { RegistrationService } from './Services/registration.service';
+
 
 // Define the routes
 const ROUTES = [
@@ -32,6 +43,11 @@ const ROUTES = [
   {
     path: 'registration',
     component: RegistrationComponent,
+    canActivate:[]
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
     canActivate:[]
   },
   {
@@ -60,7 +76,8 @@ const ROUTES = [
     ArticlesComponent,
     IdeasComponent,
     AutherComponent,
-    ModalComponent
+    ModalComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -72,7 +89,8 @@ const ROUTES = [
   providers: [
     CookieService,
     AuthenticationGuardService,
-    RestResourceServiceService
+    RestResourceServiceService,
+    RegistrationService
   ],
   bootstrap: [AppComponent]
 })

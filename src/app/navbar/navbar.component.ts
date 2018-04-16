@@ -14,7 +14,7 @@ export class NavbarComponent implements OnInit {
   public loggedin = false;
   public Username = '';
   
-  constructor(private http:HttpClient,private cookieService:CookieService,private authService:AuthenticationGuardService,private router:Router) { 
+  constructor(private http:HttpClient,private authService:AuthenticationGuardService,private router:Router) { 
     this.user={
       username:'',
       password:''

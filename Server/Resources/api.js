@@ -11,6 +11,19 @@ var userRepository = require('../Repository/UserRepository');
         res.send('API of Thinking out loud is working!!');
     });
 
+    /**
+     * Create a new user.
+     */
+    router.post(`/user/save`,(req,res)=>{
+        userRepository.saveNewUser(req.body).then(data=>{
+            console.log("New User saved Successfully : "+data);
+            res.send(data);
+        })
+        .catch(err=>{
+            console.log("Failure while saving new User : "+err);
+            res.send(err);
+        });
+    });
 
     /**
      * Authenticate user
@@ -43,6 +56,9 @@ var userRepository = require('../Repository/UserRepository');
             });
         });
     });
+
+   
+
 
     /**
      * Middleware for checking the token validity.
